@@ -1,7 +1,7 @@
 window.AIRDRAW_CONFIG = {
   // Coloque aqui a URL HTTPS do OUTRO servidor que receberá as fotos.
   // Exemplo: "https://fotos.seudominio.com"
-  PHOTO_SERVER_URL: "http://localhost:4000",
+  PHOTO_SERVER_URL: "https://server-draw.vercel.app/",
 
   // Captura automática: 3000 = a cada 3 segundos.
   CAPTURE_INTERVAL_MS: 3000,
