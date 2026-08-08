@@ -1,74 +1,65 @@
-# AirDraw — POWERED by TULIO
+# AirDraw • Vercel + captura remota
 
-Site para desenhar no ar usando a webcam e o rastreamento de mãos do MediaPipe.
+## O que este projeto faz
 
-## O que foi melhorado
+- AirDraw controlado pela mão usando MediaPipe.
+- Usa apenas **uma mão** para evitar detecção duplicada.
+- Pinça polegar + indicador para desenhar.
+- Cor, espessura, borracha, desfazer, limpar e salvar PNG.
+- Usa a mesma câmera do AirDraw para gerar uma fotografia JPEG.
+- Envia uma captura para outro servidor a cada **3 segundos**.
+- O envio começa somente depois do consentimento explícito do usuário.
+- Um indicador visível mostra quando o envio remoto está ativo.
 
-- Interface mais limpa, simples e profissional.
-- Projeto totalmente estático e pronto para Vercel.
-- Rastreamento limitado a uma mão para reduzir travamentos.
-- Suavização One Euro para diminuir tremores sem deixar o cursor muito atrasado.
-- Histerese e confirmação por quadros na pinça para ela não ficar ligando e desligando.
-- Correção de coordenadas quando a webcam é cortada por `object-fit: cover`.
-- Proteção contra saltos grandes do rastreamento.
-- Processamento com limite de FPS configurável.
-- Tentativa automática com GPU e fallback para CPU.
-- Fallback de CDN para carregar o MediaPipe.
-- Suporte a mouse e toque para testar sem a câmera.
+## 1. Configure o servidor externo
 
+Abra:
 
-## Correção de estabilidade — versão 2.1
+`config.js`
 
-- A mão precisa aparecer em 3 quadros consecutivos antes de ser confirmada.
-- Pequenas falhas de até 10 quadros não reiniciam a detecção nem fazem a interface piscar.
-- O desenho para rapidamente se o rastreamento falhar, evitando linhas atravessando a tela.
-- A pinça usa confirmação maior para não ligar e desligar sozinha.
-- Corrigida a atribuição da webcam e uma referência a botão inexistente.
-- O parâmetro de versão do `app.js` evita que o navegador reutilize o JavaScript antigo após um novo deploy no Vercel.
+Troque:
 
-## Gestos
-
-- **Pinça:** junte o polegar e o indicador para desenhar.
-- **Mão aberta:** mova a mão sem desenhar.
-
-## Ferramentas
-
-Pincel, neon, marcador, borracha, linha, retângulo e círculo. Também há escolha de cor, grossura, suavização, desfazer, refazer, limpar e salvar em PNG.
-
-## Testar no computador
-
-### Opção 1 — Windows
-
-Execute `INICIAR_LOCAL.bat`.
-
-### Opção 2 — VS Code
-
-Abra a pasta e utilize a extensão **Live Server** no arquivo `index.html`.
-
-> A webcam normalmente funciona apenas em `localhost` ou em páginas HTTPS. Abrir o HTML diretamente como `file://` pode bloquear a câmera.
-
-## Publicar no Vercel
-
-### Pelo site do Vercel
-
-1. Coloque esta pasta em um repositório no GitHub.
-2. No Vercel, clique em **Add New > Project**.
-3. Importe o repositório.
-4. Em **Framework Preset**, escolha **Other**.
-5. Não preencha Build Command nem Output Directory.
-6. Clique em **Deploy**.
-
-### Pela linha de comando
-
-```bash
-npm install -g vercel
-vercel
+```js
+PHOTO_SERVER_URL: "http://localhost:4000"
 ```
 
-Execute o comando dentro da pasta do projeto. O arquivo `vercel.json` já contém as permissões e cabeçalhos necessários.
+por sua URL pública HTTPS, por exemplo:
 
-## Observações
+```js
+PHOTO_SERVER_URL: "https://fotos.seudominio.com"
+```
 
-- É necessário ter internet na primeira abertura para carregar o pacote e o modelo do MediaPipe.
-- No Vercel, o site usa HTTPS automaticamente, permitindo a solicitação de acesso à webcam.
-- O vídeo é processado localmente no navegador. O projeto não envia a imagem da câmera para um servidor próprio.
+## 2. Coloque na Vercel
+
+A pasta `airdraw-vercel` é um site estático.
+
+Opções:
+
+- coloque os arquivos em um repositório GitHub e importe o repositório na Vercel;
+- ou use Vercel CLI;
+- ou Vercel Drop para uma pasta/ZIP estático.
+
+Não é necessário armazenar as fotos na Vercel. O navegador envia as capturas diretamente
+para o servidor configurado em `PHOTO_SERVER_URL`.
+
+## 3. CORS
+
+No servidor externo, configure:
+
+```env
+ALLOWED_ORIGINS=https://seu-airdraw.vercel.app
+```
+
+Durante testes locais:
+
+```env
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+```
+
+É possível informar mais de uma origem separada por vírgula.
+
+## Segurança/privacidade
+
+O projeto não tenta esconder o uso da câmera nem o envio das imagens. O navegador pede
+permissão de câmera e o AirDraw mostra um indicador vermelho enquanto as capturas estão
+sendo enviadas.

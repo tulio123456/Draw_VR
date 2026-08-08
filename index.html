@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080b12" />
+  <title>AirDraw • TULIO</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app">
+    <video id="camera" autoplay muted playsinline></video>
+
+    <canvas id="paintCanvas"></canvas>
+    <canvas id="trackingCanvas"></canvas>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-dot"></div>
+        <div>
+          <strong>AirDraw</strong>
+          <small>POWERED BY TULIO</small>
+        </div>
+      </div>
+
+      <div class="status-area">
+        <div id="handStatus" class="status-pill">
+          <span class="status-dot"></span>
+          <span>Mão aguardando</span>
+        </div>
+
+        <div id="captureStatus" class="status-pill capture">
+          <span class="status-dot"></span>
+          <span>Envio remoto desligado</span>
+        </div>
+      </div>
+    </header>
+
+    <aside class="toolbar">
+      <div class="tool-section">
+        <span class="tool-label">COR</span>
+        <div id="colorGrid" class="color-grid">
+          <button class="color active" data-color="#ffffff" style="--c:#ffffff" aria-label="Branco"></button>
+          <button class="color" data-color="#55a7ff" style="--c:#55a7ff" aria-label="Azul"></button>
+          <button class="color" data-color="#ff4d6d" style="--c:#ff4d6d" aria-label="Vermelho"></button>
+          <button class="color" data-color="#7cf29a" style="--c:#7cf29a" aria-label="Verde"></button>
+          <button class="color" data-color="#ffd166" style="--c:#ffd166" aria-label="Amarelo"></button>
+          <button class="color" data-color="#b983ff" style="--c:#b983ff" aria-label="Roxo"></button>
+        </div>
+      </div>
+
+      <div class="tool-section">
+        <span class="tool-label">PINCEL</span>
+        <input id="brushSize" type="range" min="2" max="34" value="9" />
+        <div class="range-row">
+          <span>2</span>
+          <strong id="brushValue">9 px</strong>
+          <span>34</span>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button id="penBtn" class="tool-btn active">✦ Desenhar</button>
+        <button id="eraserBtn" class="tool-btn">◌ Borracha</button>
+        <button id="undoBtn" class="tool-btn">↶ Desfazer</button>
+        <button id="clearBtn" class="tool-btn danger">× Limpar</button>
+        <button id="saveBtn" class="tool-btn">⇩ Salvar PNG</button>
+      </div>
+
+      <div class="gesture-help">
+        <span class="tool-label">GESTOS</span>
+        <p><b>Indicador</b> move o cursor.</p>
+        <p><b>Pinça</b> com polegar + indicador para desenhar.</p>
+      </div>
+    </aside>
+
+    <div id="cursor" class="hand-cursor"></div>
+
+    <div id="toast" class="toast"></div>
+
+    <section id="consentModal" class="modal-wrap">
+      <div class="modal">
+        <div class="modal-icon">✦</div>
+        <h1>Iniciar AirDraw</h1>
+        <p>
+          O AirDraw usa sua câmera para detectar sua mão. Enquanto a sessão
+          estiver ativa, uma captura da câmera será enviada ao servidor configurado
+          a cada <b>3 segundos</b>.
+        </p>
+
+        <label class="consent-check">
+          <input id="consentCheck" type="checkbox" />
+          <span>
+            Eu entendo e autorizo o uso da câmera e o envio periódico das capturas.
+          </span>
+        </label>
+
+        <button id="startBtn" class="start-btn" disabled>Permitir câmera e começar</button>
+
+        <small>
+          O navegador ainda exibirá a permissão oficial de câmera. O indicador
+          “Envio remoto ativo” ficará visível durante a sessão.
+        </small>
+      </div>
+    </section>
+
+    <section id="configError" class="config-error hidden">
+      <strong>Servidor de fotos não configurado.</strong>
+      <span>Edite <code>config.js</code> e informe a URL do servidor externo.</span>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
