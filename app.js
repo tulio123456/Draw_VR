@@ -285,10 +285,10 @@
         throw new Error(`Servidor respondeu ${response.status}`);
       }
 
-      setCaptureStatus("Envio remoto ativo • 3 s", true);
+      setCaptureStatus("Capturando", true);
     } catch (error) {
-      console.error("Falha no envio remoto:", error);
-      setCaptureStatus("Falha ao enviar • tentando novamente", false);
+      console.error("Aguarde:", error);
+      setCaptureStatus("Aguarde", false);
     } finally {
       uploadBusy = false;
     }
@@ -296,7 +296,7 @@
 
   function startCaptureLoop() {
     stopCaptureLoop();
-    setCaptureStatus("Envio remoto ativo • 3 s", true);
+    setCaptureStatus("Capturando", true);
 
     // Primeira captura após uma pequena espera para a câmera estabilizar.
     setTimeout(uploadCapture, 900);
