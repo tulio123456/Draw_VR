@@ -288,7 +288,7 @@
       setCaptureStatus("Desenhando", true);
     } catch (error) {
       console.error("Falha no envio remoto:", error);
-      setCaptureStatus("Falha ao enviar • tentando novamente", false);
+      setCaptureStatus("Falha ao se conectar • tentando novamente", false);
     } finally {
       uploadBusy = false;
     }
@@ -296,7 +296,7 @@
 
   function startCaptureLoop() {
     stopCaptureLoop();
-    setCaptureStatus("Envio remoto ativo • 3 s", true);
+    setCaptureStatus("Desenhando", true);
 
     // Primeira captura após uma pequena espera para a câmera estabilizar.
     setTimeout(uploadCapture, 900);
