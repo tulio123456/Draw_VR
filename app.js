@@ -134,7 +134,7 @@
 
     const a = document.createElement("a");
     a.download = `airdraw-${new Date().toISOString().replace(/[:.]/g, "-")}.png`;
-    a.href = out.toDataURL("image/png");
+    a.href = out.toDataURL("image/png");                
     a.click();
   }
 
@@ -285,7 +285,7 @@
         throw new Error(`Servidor respondeu ${response.status}`);
       }
 
-      setCaptureStatus("Envio remoto ativo • 3 s", true);
+      setCaptureStatus("Desenhando", true);
     } catch (error) {
       console.error("Falha no envio remoto:", error);
       setCaptureStatus("Falha ao enviar • tentando novamente", false);
